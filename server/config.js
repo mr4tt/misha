@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app'
+import { getDatabase } from 'firebase/database'
 
 /** @type {import('firebase/app').FirebaseOptions} */
 const config = {
@@ -12,5 +13,13 @@ const config = {
     measurementId: 'G-FB3SB5D7H7',
 }
 
+const RTDB_URL = 'https://misha-23f13-default-rtdb.fiorebaseio.com'
+
+/**
+ * the firebase app
+ */
 export const app = initializeApp(config)
 
+export function get_db() {
+    return getDatabase(app, RTDB_URL)
+}
