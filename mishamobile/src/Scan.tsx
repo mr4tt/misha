@@ -6,32 +6,26 @@ import type {RootStackParamList} from '../App';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ScanScreen'>;
 
+// Pre-step, call this before any NFC operations
+NfcManager.start();
+
 export function ScanScreen({navigation}: Props) {
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
     async function readNdef() {
-      // Pre-step, call this before any NFC operations
-      NfcManager.start();
       try {
-        const SECONDS: number = 20;
-        interval = setInterval(async () => {
-          // register for the NFC tag with NDEF in it
-          const reqTag = await NfcManager.requestTechnology(NfcTech.Ndef);
-          if (reqTag) {
-            // the resolved tag object will contain `ndefMessage` property
-            const tag = await NfcManager.getTag();
-            if (tag === null) {
-              console.warn('couldnt find tag');
-              return;
-            }
-            console.warn('Tag found', tag);
-            clearInterval(interval);
+        // register for the NFC tag with NDEF in it
+        await NfcManager.requestTechnology(NfcTech.Ndef);
+        // the resolved tag object will contain `ndefMessage` property
+        const tag = await NfcManager.getTag();
+        if (tag === null) {
+          console.warn('couldnt find tag');
+          return;
+        }
+        console.warn('Tag found', tag);
 
-            NfcManager.cancelTechnologyRequest();
-            navigation.navigate('ChooseScreen', {tag});
-            // TODO: go to next screen (save this tag along the way)
-          }
-        }, SECONDS * 1000);
+        NfcManager.cancelTechnologyRequest();
+        navigation.navigate('ChooseScreen', {tag});
+        // TODO: go to next screen (save this tag along the way)
       } catch (ex) {
         // in theory this should never happen - if nfc tech isnt available or cant get tag,
         // it should just return null. but this is just in case i guess or something.
@@ -40,10 +34,6 @@ export function ScanScreen({navigation}: Props) {
       }
     }
     readNdef();
-
-    return () => {
-      clearInterval(interval);
-    };
   }, [navigation]);
 
   return (
