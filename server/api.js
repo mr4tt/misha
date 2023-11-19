@@ -247,7 +247,7 @@ export function seed() {
         E3: rc(5, 7),
         E4: rc(7, 7),
     };
-    const seed_users = ["misha"];
+    const seed_users = ["misha", "ewang2002"];
     const pc = (id) => ({ id });
     const u = (uid) => ({ uid });
     set(ref(), {
@@ -257,8 +257,14 @@ export function seed() {
         },
         users: Object.fromEntries(seed_users.map((id) => [id, u(id)])),
         active_sessions: {
+            // over time
             B2: {
                 user: "misha",
+                start_time: Date.now() - (60 * 1000 * 121),
+            },
+            // just started
+            C4: {
+                user: "ewang2002",
                 start_time: Date.now(),
             },
         },
