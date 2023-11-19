@@ -1,6 +1,6 @@
 import React from 'react';
 import {ChooseScreen} from './src/Choose';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {TagEvent} from 'react-native-nfc-manager';
@@ -19,10 +19,18 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#CAF7FE',
+  },
+};
+
 export default function App() {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer>
+      <NavigationContainer theme={MyTheme}>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,

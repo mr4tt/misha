@@ -17,7 +17,7 @@ export function Layout(props) {
     let name = '';
 
     const showAlert = () =>
-      Alert.alert('Check in confirmed!', '', [
+      Alert.alert('Check in confirmed!', 'Enjoy your stay!', [
         {
           text: 'Go Home',
           onPress: () => {
