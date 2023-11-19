@@ -8,7 +8,7 @@ import { usePcCoords } from '@/hooks/use-pc-coords';
 import { cl } from '@/utils/cl';
 import { range } from '@/utils/range';
 import { useMemo, useState } from 'react';
-import { Coordinate } from 'server/types';
+import { Coordinate, PcId } from 'server/types';
 import { end_all_sessions } from 'server';
 import { mark_pc_inactive } from 'server';
 import { mark_pc_no_longer_inactive } from 'server';
@@ -43,6 +43,18 @@ export default function Home() {
     return pcState
   }, [selectedRc, pcRcs, inactivePcRcs, occupiedPcRcs])
 
+  const selectedOccupiedPcStartTime = useMemo(() => {
+    if (selectedPcState !== 'occupied' || selectedPcId === null) { return null }
+    const startTime = occupiedPcs[selectedPcId]?.start_time
+    const d = new Date(startTime)
+    return d
+  }, [selectedPcState, selectedPcId, occupiedPcs])
+
+  const minutesSinceSelectedOccupiedPcStartTime = useMemo(() => {
+    if (selectedOccupiedPcStartTime === null) { return null }
+    return minutesSinceNow(selectedOccupiedPcStartTime.getTime())
+  }, [selectedOccupiedPcStartTime])
+
   const headerLabel = useMemo(() => { 
     if (selectedPcState === null) { return <><span>Select a cell,</span><span>or choose an action</span></> }
     return `${selectedPcId} - ${displayPcState(selectedPcState)}`
@@ -62,6 +74,7 @@ export default function Home() {
                 <div className="flex items-center justify-center gap-8">
                   <LegendKey fill="fill-green-500" label="available" />
                   <LegendKey fill="fill-red-500" label="occupied" />
+                  <LegendKey fill="fill-yellow-500" label="occupied and over time" />
                   <LegendKey fill="fill-slate-700" label="out of service" />
                 </div>
                 <div className="self-stretch grow w-full flex items-center justify-center overflow-hidden border rounded-xl border-solid border-tec-blue">
@@ -83,7 +96,7 @@ export default function Home() {
                                   'grow', 'border-solid',
                                   !hasPc && 'border border-slate',
                                   isSelected && 'ring-4 ring-inset ring-black',
-                                  resolveCellColor(isInactive, isOccupied, hasPc),
+                                  resolveCellColor(isInactive, isOccupied, hasPc, occupiedPcs?.[pcRcs?.[r]?.[c]]?.start_time),
                                   isClickable && "hover:cursor-pointer",
                                 )}
                                 onClick={!isClickable ? undefined : () => {
@@ -115,6 +128,14 @@ export default function Home() {
                 </>) : selectedPcState === 'inactive' ? (<>
                   <li><button className="rounded bg-green-500 text-white p-2" onClick={() => mark_pc_no_longer_inactive(selectedPcId)}>Mark back in service</button></li>
                 </>) : selectedPcState === 'occupied' ? (<>
+                  <li className="flex flex-col items-center justify-center">
+                    <span>id: {occupiedPcs[selectedPcId!].user}</span>
+                    {selectedOccupiedPcStartTime && (
+                      <span>
+                        start time: {selectedOccupiedPcStartTime.toLocaleDateString()}
+                        <span className={cl(isOverTime(minutesSinceSelectedOccupiedPcStartTime) && 'text-red-500 font-bold')}> ({minutesSinceSelectedOccupiedPcStartTime} minutes ago)</span></span>
+                    )}
+                  </li>
                   <li><button className="rounded bg-red-500 text-white p-2" onClick={() => end_session(selectedPcId)}>Free this PC</button></li>
                 </>) : null}
               </ul>
@@ -136,9 +157,14 @@ function LegendKey({ fill, label }: LegendKeyProps) {
   )
 }
 
-function resolveCellColor(inactive: boolean, occupied: boolean, hasPc: boolean) {
+function resolveCellColor(inactive: boolean, occupied: boolean, hasPc: boolean, start_time?: number) {
   if (inactive) { return 'bg-slate-700' }
-  if (occupied) { return 'bg-red-500' }
+  if (occupied) {
+    if (start_time != null && isOverTime(minutesSinceNow(start_time))) {
+      return 'bg-yellow-500'
+    }
+    return 'bg-red-500'
+  }
   if (hasPc) { return 'bg-green-500' }
   return ''
 }
@@ -162,4 +188,12 @@ function displayPcState(pcState: PcState) {
 function isSelectedRc(selected: Coordinate | null, r: number, c: number) {
   if (selected === null) { return false }
   return selected.r === r && selected.c === c
+}
+
+function minutesSinceNow(n: number) {
+  return Math.round((Date.now() - n) / 60 / 1000)
+}
+
+function isOverTime(minutes: number | null) {
+  return minutes !== null && minutes >= 120
 }
