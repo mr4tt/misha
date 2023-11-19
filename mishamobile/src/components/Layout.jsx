@@ -113,7 +113,7 @@ export function Layout(props) {
           backgroundColor: '#00629b',
           height: 25,
           width: props.pcLayoutDimensions.cols
-            ? 35 * props.pcLayoutDimensions.cols
+            ? 40 * props.pcLayoutDimensions.cols
             : 0,
           textAlign: 'center', // <-- the magic
           borderTopRightRadius: 10,
@@ -138,7 +138,7 @@ export function Layout(props) {
           backgroundColor: '#00629b',
           height: 25,
           width: props.pcLayoutDimensions.cols
-            ? 35 * props.pcLayoutDimensions.cols
+            ? 40 * props.pcLayoutDimensions.cols
             : 0,
           textAlign: 'center', // <-- the magic
           borderBottomRightRadius: 10,
@@ -149,7 +149,7 @@ export function Layout(props) {
       <Text
         style={{
           color: 'black',
-          fontSize: 20,
+          fontSize: 25,
           marginBottom: 5,
           paddingTop: 20,
         }}>
@@ -174,16 +174,18 @@ export function Layout(props) {
               flexDirection: 'row',
               justifyContent: 'left',
               alignItems: 'center',
-              width: 120,
+              width: 150,
             }}>
             <View
               style={{
-                height: 15,
-                width: 15,
+                height: 20,
+                width: 20,
                 backgroundColor: '#23c55e',
                 borderWidth: 1,
               }}></View>
-            <Text style={{marginLeft: 5, color: 'black'}}>Available</Text>
+            <Text style={{marginLeft: 5, color: 'black', fontSize: 20}}>
+              Available
+            </Text>
           </View>
 
           <View
@@ -191,16 +193,18 @@ export function Layout(props) {
               flexDirection: 'row',
               justifyContent: 'left',
               alignItems: 'center',
-              width: 120,
+              width: 150,
             }}>
             <View
               style={{
-                height: 15,
-                width: 15,
+                height: 20,
+                width: 20,
                 backgroundColor: '#ee4444',
                 borderWidth: 1,
               }}></View>
-            <Text style={{color: 'black', marginLeft: 0}}> Occupied</Text>
+            <Text style={{color: 'black', marginLeft: 0, fontSize: 20}}>
+              {" "}Occupied
+            </Text>
           </View>
         </View>
 
@@ -215,16 +219,18 @@ export function Layout(props) {
               flexDirection: 'row',
               justifyContent: 'left',
               alignItems: 'center',
-              width: 120,
+              width: 150,
             }}>
             <View
               style={{
-                height: 15,
-                width: 15,
+                height: 20,
+                width: 20,
                 backgroundColor: '#324154',
                 borderWidth: 1,
               }}></View>
-            <Text style={{marginLeft: 5, color: 'black'}}>Unavailable</Text>
+            <Text style={{marginLeft: 5, color: 'black', fontSize: 20}}>
+              Unavailable
+            </Text>
           </View>
 
           <View
@@ -232,16 +238,18 @@ export function Layout(props) {
               flexDirection: 'row',
               justifyContent: 'left',
               alignItems: 'center',
-              width: 120,
+              width: 150,
             }}>
             <View
               style={{
-                height: 15,
-                width: 15,
+                height: 20,
+                width: 20,
                 backgroundColor: 'yellow',
                 borderWidth: 1,
               }}></View>
-            <Text style={{marginLeft: 5, color: 'black'}}>Selected</Text>
+            <Text style={{marginLeft: 5, color: 'black', fontSize: 20}}>
+              Selected
+            </Text>
           </View>
         </View>
       </View>
@@ -252,17 +260,19 @@ export function Layout(props) {
             alignItems: 'center',
             justifyContent: 'center',
             paddingVertical: 12,
-            paddingHorizontal: 32,
+            paddingHorizontal: 40,
             marginHorizontal: 10,
             marginVertical: 20,
             borderRadius: 4,
             elevation: 3,
             backgroundColor: 'white',
-            marginTop: 30,
+            marginTop: 40,
+
           }}>
           <Text
             style={{
               color: 'black',
+              fontSize: 20,
             }}>
             Confirm
           </Text>

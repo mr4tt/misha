@@ -48,8 +48,8 @@ export default function Square(props) {
       {props.selectedCol !== null && (
         <View
           style={{
-            height: 35,
-            width: 35,
+            height: 40,
+            width: 40,
             borderWidth:
               props.selectedCol === props.square.col &&
               props.selectedRow == props.square.row

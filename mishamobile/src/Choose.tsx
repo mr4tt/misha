@@ -82,8 +82,8 @@ export function ChooseScreen({route, navigation}: Props  ) {
       color: '#000000',
       textAlign: 'center',
       verticalAlign: 'top',
-      marginTop: -30,
-      marginBottom: 10,
+      marginTop: -40,
+      marginBottom: 30,
       paddingBottom: 10,
     }}>
       Please choose your seat.</Text>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: 25,
+    fontSize: 32,
     color: '#000000',
     paddingTop: 40,
     paddingBottom: 10,
