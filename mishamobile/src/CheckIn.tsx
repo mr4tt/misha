@@ -19,7 +19,7 @@ export function CheckInScreen({navigation}: Props) {
     ]);
   useNfc(
     async tag => {
-      if (await api.check_if_user_has_active_session(tag)) {
+      if (await api.check_if_user_has_active_session(tag.id)) {
         showAlert();
       } else {
         navigation.replace('ChooseScreen', {tag});

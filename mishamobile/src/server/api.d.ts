@@ -43,6 +43,16 @@ export function register_user(id: any): Promise<void>;
  */
 export function register_session(user_id: any, pc_id: any): Promise<void>;
 /**
+ * end session with the given PC id (NOT user id. use end_session_by_user instead for that.)
+ * @param {import('./types').HumanReadablePcId} pc_id
+ */
+export function end_session(pc_id: any): Promise<void>;
+/**
+ * end active session associated with a given user
+ * @param {import('./types').StudentCardId} user_id
+ */
+export function end_session_by_user(user_id: any): Promise<import("@firebase/database").TransactionResult>;
+/**
  *
  * @param {import('./types').StudentCardId} user_id
  * @returns
@@ -54,5 +64,10 @@ export function check_if_user_has_active_session(user_id: any): Promise<boolean>
  * @returns
  */
 export function check_if_pc_has_active_session(pc_id: any): Promise<boolean>;
+/**
+ * hardcoded database seeding.
+ * DO NOT USE THIS IN DEPLOYED CODE
+ */
+export function seed(): void;
 export type Cb<T = any> = (x: T) => any;
 export type Rtdb = import('./types').RtdbSchema;

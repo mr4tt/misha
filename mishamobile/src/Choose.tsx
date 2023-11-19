@@ -4,7 +4,12 @@ import {View, Text, StyleSheet} from 'react-native';
 // import { listen_to_active_sessions, listen_to_inactive_pcs, listen_to_pc_layout_dimensions, listen_to_pc_layout_pcs, listen_to_pcs, listen_to_users } from '../../server/api.js';
 import * as api from './server/api.js';
 import {Layout} from './components/Layout.jsx';
-export function ChooseScreen() {
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../App.js';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'ChooseScreen'>;
+
+export function ChooseScreen({route, navigation}: Props  ) {
   const [pcs, setPcs] = useState([]);
   const [inactivePcs, setInactivePcs] = useState([]);
   const [users, setUsers] = useState([]);
@@ -89,6 +94,9 @@ export function ChooseScreen() {
         activeSessions={activeSessions}
         pcLayoutDimensions={pcLayoutDimensions}
         pcLayoutPcs={pcLayoutPcs}
+        tag={route.params.tag.id}
+
+        navigation={navigation}
       />
     </View>
   );

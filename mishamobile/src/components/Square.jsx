@@ -35,7 +35,6 @@ export default function Square(props) {
       props.selectedCol === props.square.col &&
       props.selectedRow === props.square.row
     ) {
-      console.log('chosen ones');
       setColor('yellow');
     } else {
       setColor(getColor(props.square.PcId, props.square.status));

@@ -30,9 +30,12 @@ export function CheckOutScreen({navigation}: Props) {
     );
   useNfc(
     async tag => {
-      if (!(await api.check_if_user_has_active_session(tag))) {
+      if (!(await api.check_if_user_has_active_session(tag.id))) {
         notCheckedInAlert();
       } else {
+        console.log('ending session', tag.id);
+        await api.end_session_by_user(tag.id);
+        console.log('ended session', tag.id);
         thanksAlert();
       }
     },

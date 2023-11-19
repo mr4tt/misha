@@ -8,7 +8,7 @@
     "clean": "rm -f ./*.d.ts",
     "watch": "npm run clean && tsc --watch",
     "build": "npm run clean && tsc --build",
-    "copy-server-files": "rm -r ../mishamobile/src/server && mkdir -p ../mishamobile/src/server && cp *.js ../mishamobile/src/server && cp *.d.ts ../mishamobile/src/server",
+    "copy-server-files": "rm -rf ../mishamobile/src/server && mkdir -p ../mishamobile/src/server && cp *.js ../mishamobile/src/server && cp *.d.ts ../mishamobile/src/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

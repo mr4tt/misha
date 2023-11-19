@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Pressable} from 'react-native';
+import {View, StyleSheet, Text, Pressable, Alert} from 'react-native';
+import * as api from '../server/api.js';
 
 import SquareRow from './SquareRow';
 
@@ -7,6 +8,42 @@ export function Layout(props) {
   const [squares, setSquares] = useState([]);
   const [selectedRow, setSelectedRow] = useState(-1);
   const [selectedCol, setSelectedCol] = useState(-1);
+
+  const onConfirm = () => {
+    // api.register_session(
+    //   props.tag,
+    //   props.pcLayoutPcs[selectedRow][selectedCol],
+    // );
+    let name = '';
+
+    const showAlert = () =>
+      Alert.alert('Check in confirmed!', '', [
+        {
+          text: 'Go Home',
+          onPress: () => {
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'HomeScreen'}],
+            });
+          },
+          style: 'default',
+        },
+      ]);
+
+    for (let Pc of Object.keys(props.pcLayoutPcs)) {
+      // console.log(Pc, props.pcLayoutPcs[Pc].r, props.pcLayoutPcs[Pc].c);
+      if (
+        props.pcLayoutPcs[Pc].r == selectedRow &&
+        props.pcLayoutPcs[Pc].c == selectedCol
+      ) {
+        name = Pc;
+        break;
+      }
+    }
+    showAlert();
+    // console.log(Object.keys(props));
+    api.register_session(props.tag, name);
+  };
 
   useEffect(() => {
     if (
@@ -210,6 +247,7 @@ export function Layout(props) {
       </View>
       {selectedCol !== -1 && (
         <Pressable
+          onPress={onConfirm}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
@@ -221,7 +259,6 @@ export function Layout(props) {
             elevation: 3,
             backgroundColor: 'white',
             marginTop: 30,
-            
           }}>
           <Text
             style={{
