@@ -59,19 +59,9 @@ export default function Home() {
   useEffect(() => {
     const unsub = listen_to_pc_layout_pcs(pcs => {
       if (!pcs) { setPccoords({}); return }
-      const coords = Object.values(pcs)
-        .filter(coord =>
-          !!coord
-          && Number.isInteger(coord.r) && 0 <= coord.r
-          && Number.isInteger(coord.c) && 0 <= coord.c
-        )
-      const o: Record<number, Record<number, true>> = {}
-      for (const { r, c } of coords) {
-        if (!o.hasOwnProperty(r)) { o[r] = {} }
-        o[r][c] = true
-      }
       setPccoords(pcs)
     })
+    
     return unsub
   }, [])
 
