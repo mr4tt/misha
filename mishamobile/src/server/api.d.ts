@@ -52,6 +52,7 @@ export function end_session(pc_id: any): Promise<void>;
  * @param {import('./types').StudentCardId} user_id
  */
 export function end_session_by_user(user_id: any): Promise<import("@firebase/database").TransactionResult>;
+export function end_all_sessions(): Promise<void>;
 /**
  *
  * @param {import('./types').StudentCardId} user_id

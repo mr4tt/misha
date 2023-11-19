@@ -119,15 +119,15 @@ export async function register_session(user_id, pc_id) {
         start_time: Date.now(),
     };
 
-    set(ref(ACTIVESESSIONS_PATH, pc_id), session);
+    return await set(ref(ACTIVESESSIONS_PATH, pc_id), session);
 }
 
 /**
  * end session with the given PC id (NOT user id. use end_session_by_user instead for that.)
  * @param {import('./types').HumanReadablePcId} pc_id
  */
-export async function end_session(pc_id) {
-    set(ref(ACTIVESESSIONS_PATH, pc_id), null);
+export function end_session(pc_id) {
+    return set(ref(ACTIVESESSIONS_PATH, pc_id), null);
 }
 
 /**
@@ -145,6 +145,10 @@ export function end_session_by_user(user_id) {
         }
         return data;
     });
+}
+
+export function end_all_sessions() {
+    return set(ref(ACTIVESESSIONS_PATH), null);
 }
 
 /**
