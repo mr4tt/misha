@@ -111,13 +111,14 @@ export function Layout(props) {
       <Text
         style={{
           backgroundColor: '#00629b',
-          height: 25,
+          height: 35,
           width: props.pcLayoutDimensions.cols
             ? 40 * props.pcLayoutDimensions.cols
             : 0,
           textAlign: 'center', // <-- the magic
           borderTopRightRadius: 10,
           borderTopLeftRadius: 10,
+          fontSize: 20,
         }}>
         Cafe
       </Text>
@@ -136,13 +137,14 @@ export function Layout(props) {
       <Text
         style={{
           backgroundColor: '#00629b',
-          height: 25,
+          height: 35,
           width: props.pcLayoutDimensions.cols
             ? 40 * props.pcLayoutDimensions.cols
             : 0,
           textAlign: 'center', // <-- the magic
           borderBottomRightRadius: 10,
           borderBottomLeftRadius: 10,
+          fontSize: 20,
         }}>
         Garage
       </Text>
