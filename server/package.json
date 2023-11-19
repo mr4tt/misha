@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -f ./*.d.ts",
+    "watch": "npm run clean && tsc --watch",
+    "build": "npm run clean && tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,5 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "firebase": "^10.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
   }
 }

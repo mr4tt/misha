@@ -21,5 +21,5 @@ const RTDB_URL = 'https://misha-23f13-default-rtdb.fiorebaseio.com'
 export const app = initializeApp(config)
 
 export function get_db() {
-    return getDatabase(app, RTDB_URL)
+    return getDatabase(app)
 }

@@ -13,9 +13,10 @@ export {}
 
 /**
  * @typedef {{
- *  pcs: Record<HumanReadablePcId, true>,
+ *  pcs: Record<HumanReadablePcId, Pc>,
  *  users: Record<StudentCardId, User>,
  *  active_sessions: Record<HumanReadablePcId, Session>,
+ *  pc_layout: PcLayout,
  * }} RtdbSchema
  */
 
@@ -43,4 +44,16 @@ export {}
  *  user: StudentCardId,
  *  start_time: DateMs,
  * }} Session
+ */
+
+/**
+ * @typedef {{ r: number, c: number }} Coordinate
+ * 
+ * @typedef {{
+ *  dimensions: {
+ *      rows: number, 
+ *      cols: number,
+ *  },
+ *  pcs: Record<HumanReadablePcId, Coordinate>,
+ * }} PcLayout
  */
