@@ -144,3 +144,38 @@ export async function check_if_pc_has_active_session(pc_id) {
     const data = await get(ref(ACTIVESESSIONS_PATH, pc_id))
     return data.exists()
 }
+
+/**
+ * hardcoded database seeding.
+ * DO NOT USE THIS IN DEPLOYED CODE
+ */
+export function seed() {
+    const rc = (r, c) =>( { r, c })
+    const pc_locs = {
+        A1: rc(7, 0), A2: rc(7, 1), A3: rc(7, 2), A4: rc(7, 3), A5: rc(7, 4),
+        B1: rc(5, 0), B2: rc(5, 1), B3: rc(5, 2), B4: rc(5, 3), B5: rc(5, 4),
+        C1: rc(3, 0), C2: rc(3, 1), C3: rc(3, 2), C4: rc(3, 3), C5: rc(3, 4), C6: rc(3, 5),
+        D1: rc(1, 0), D2: rc(1, 1), D3: rc(1, 2), D4: rc(1, 3), D5: rc(1, 4), D6: rc(1, 5),
+        E1: rc(1, 7), E2: rc(3, 7), E3: rc(5, 7), E4: rc(7, 7),
+    }
+    const seed_users = ['misha']
+    const pc = id => ({ id })
+    const u = uid => ({ uid })
+    set(ref(), {
+        pcs: Object.fromEntries(Object.keys(pc_locs).map(id => [id, pc(id)])),
+        inactive_pcs: {
+            E2: true,
+        },
+        users: Object.fromEntries(seed_users.map(id => [id, u(id)])),
+        active_sessions: {
+            B2: {
+                user: 'misha',
+                start_time: Date.now(),
+            }
+        },
+        pc_layout: {
+            dimensions: { rows: 9, cols: 8 },
+            pcs: pc_locs
+        }
+    })
+}
