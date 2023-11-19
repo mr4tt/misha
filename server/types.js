@@ -3,7 +3,12 @@ export {}
 /**
  * the human-readable "id" of a PC (e.g. `A1`, `A2`, ...)
  * 
- * @typedef {string} HumanReadablePcId
+ * @typedef {string} PcId
+ */
+
+/**
+ * this is an id card id, NOT the pid
+ * @typedef {string} UserId
  */
 
 /**
@@ -13,27 +18,23 @@ export {}
 
 /**
  * @typedef {{
- *  pcs: Record<HumanReadablePcId, Pc>,
- *  users: Record<StudentCardId, User>,
- *  active_sessions: Record<HumanReadablePcId, Session>,
+ *  pcs: Record<PcId, Pc>,
+ *  inactive_pcs: Record<PcId, true>,
+ *  users: Record<UserId, User>,
+ *  active_sessions: Record<PcId, Session>,
  *  pc_layout: PcLayout,
  * }} RtdbSchema
  */
 
 /**
  * @typedef {{
- *  hrid: HumanReadablePcId,
+ *  hrid: PcId,
  * }} Pc
- */
-
-/**
- * this is an id card id, NOT the pid
- * @typedef {string} StudentCardId
  */
 
 /** 
  * @typedef {{
- *  uid: StudentCardId,
+ *  uid: UserId,
  * }} User
  */
 
@@ -41,7 +42,7 @@ export {}
  * a gaming session
  * 
  * @typedef {{
- *  user: StudentCardId,
+ *  user: UserId,
  *  start_time: DateMs,
  * }} Session
  */
@@ -52,6 +53,6 @@ export {}
  * 
  * @typedef {{
  *  dimensions: Dimensions,
- *  pcs: Record<HumanReadablePcId, Coordinate>,
+ *  pcs: Record<PcId, Coordinate>,
  * }} PcLayout
  */
