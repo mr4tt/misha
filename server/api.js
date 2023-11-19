@@ -11,6 +11,7 @@ import { get_db } from "./config";
  */
 
 const PCS_PATH = 'pcs'
+const INACTIVEPCS_PATH = 'inactive_pcs'
 const USERS_PATH = 'users'
 const ACTIVESESSIONS_PATH = 'active_sessions'
 const PCLAYOUT_PATH = 'pc_layout'
@@ -30,6 +31,16 @@ function ref(...path) {
  */
 export function listen_to_pcs(cb) {
     return onValue(ref(PCS_PATH), ss => {
+        cb(ss.val())
+    })
+}
+
+/**
+ * 
+ * @param {Cb<Rtdb['inactive_pcs']>} cb
+ */
+export function listen_to_inactive_pcs(cb) {
+    return onValue(ref(INACTIVEPCS_PATH), ss => {
         cb(ss.val())
     })
 }
