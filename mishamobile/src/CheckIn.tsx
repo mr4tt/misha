@@ -21,7 +21,7 @@ export function CheckInScreen({navigation}: Props) {
       if (await api.check_if_user_has_active_session(tag)) {
         showAlert();
       } else {
-        navigation.navigate('ChooseScreen', {tag});
+        navigation.replace('ChooseScreen', {tag});
       }
     },
     [navigation],
