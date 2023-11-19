@@ -3,13 +3,13 @@ import React from 'react';
 import {RootStackParamList} from '../App';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import {useNfc} from './hooks/use-nfc';
-import * as api from '../server';
+import * as api from './server';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CheckInScreen'>;
 
 export function CheckInScreen({navigation}: Props) {
   const showAlert = () =>
-    Alert.alert('Alert Title', 'My Alert Msg', [
+    Alert.alert('Already Checked In', 'Maybe you meant to check out?', [
       {
         text: 'Go Home',
         onPress: () => navigation.navigate('HomeScreen'),
@@ -42,5 +42,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25,
     color: '#000000',
+    padding: 40,
+    textAlign: 'center',
+    verticalAlign: 'top',
   },
 });

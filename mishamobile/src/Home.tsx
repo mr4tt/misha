@@ -1,7 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {RootStackParamList} from '../App';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HomeScreen'>;
 
@@ -9,18 +9,16 @@ export function HomeScreen({navigation}: Props) {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.text}>Welcome to Tec Cafe!</Text>
-      <Button
-        onPress={() => navigation.navigate('CheckInScreen')}
-        title="Learn More"
-        color="#841584"
-        accessibilityLabel="Nav to CheckIn Screen"
-      />
-      <Button
-        onPress={() => navigation.navigate('CheckOutScreen')}
-        title="Learn More"
-        color="#841584"
-        accessibilityLabel="Nav to CheckOut Screen"
-      />
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('CheckInScreen')}>
+        <Text style={styles.text}>Check In</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('CheckOutScreen')}>
+        <Text style={styles.text}>Check Out</Text>
+      </Pressable>
     </View>
   );
 }
@@ -34,5 +32,16 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25,
     color: '#000000',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    marginHorizontal: 10,
+    marginVertical: 20,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'white',
   },
 });
