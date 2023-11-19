@@ -167,7 +167,12 @@ export function seed() {
             E2: true,
         },
         users: Object.fromEntries(seed_users.map(id => [id, u(id)])),
-        active_sessions: {},
+        active_sessions: {
+            B2: {
+                user: 'misha',
+                start_time: Date.now(),
+            }
+        },
         pc_layout: {
             dimensions: { rows: 9, cols: 8 },
             pcs: pc_locs

@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "copy-server-files": "mkdir -p server && cp ../server/*.js server && cp ../server/*.d.ts server",
+    "copy-server-files": "rm -rf src/server && mkdir -p src/server && cp ../server/*.js src/server && cp ../server/*.d.ts src/server",
     "test": "jest"
   },
   "dependencies": {
