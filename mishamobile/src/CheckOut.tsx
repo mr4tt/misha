@@ -3,6 +3,7 @@ import React from 'react';
 import {RootStackParamList} from '../App';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import {useNfc} from './hooks/use-nfc';
+import Raccoon from './assets/checkInRacoon.svg';
 import * as api from './server';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CheckOutScreen'>;
@@ -18,7 +19,7 @@ export function CheckOutScreen({navigation}: Props) {
     ]);
   const thanksAlert = () =>
     Alert.alert(
-      'Thank you for visiting Tec Cafe!',
+      'Thank you for visiting TEC Cafe!',
       'We hope you enjoyed your visit :)',
       [
         {
@@ -43,7 +44,8 @@ export function CheckOutScreen({navigation}: Props) {
   );
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.text}>Please tap your Student ID to check in</Text>
+      <Text style={styles.text}>Please tap your Student ID to check out</Text>
+      <Raccoon width={120 * 7.5} height={40 * 7.5} />
     </View>
   );
 }
@@ -51,8 +53,9 @@ export function CheckOutScreen({navigation}: Props) {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 100,
+    gap: 125,
   },
   text: {
     fontSize: 25,
