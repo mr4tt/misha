@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import NfcManager, {NfcTech} from 'react-native-nfc-manager';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -10,31 +10,35 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ScanScreen'>;
 NfcManager.start();
 
 export function ScanScreen({navigation}: Props) {
+  const [scuffed, setScuffed] = useState(false);
+
   useEffect(() => {
     async function readNdef() {
+      console.log('readNdef')
       try {
         // register for the NFC tag with NDEF in it
         await NfcManager.requestTechnology(NfcTech.Ndef);
         // the resolved tag object will contain `ndefMessage` property
         const tag = await NfcManager.getTag();
         if (tag === null) {
-          console.warn('couldnt find tag');
+          console.log('couldnt find tag');
           return;
         }
-        console.warn('Tag found', tag);
+        console.log('Tag found', tag);
 
-        NfcManager.cancelTechnologyRequest();
+        await NfcManager.cancelTechnologyRequest();
+        setScuffed((prev) => !prev);
         navigation.navigate('ChooseScreen', {tag});
         // TODO: go to next screen (save this tag along the way)
       } catch (ex) {
         // in theory this should never happen - if nfc tech isnt available or cant get tag,
         // it should just return null. but this is just in case i guess or something.
-        console.warn('Oops!', ex);
+        console.log('Oops!', ex);
         NfcManager.cancelTechnologyRequest();
       }
     }
     readNdef();
-  }, [navigation]);
+  }, [navigation, scuffed]);
 
   return (
     <View style={styles.wrapper}>
@@ -51,6 +55,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
-    color: '#FFFFFF',
+    color: '#000000',
   },
 });
