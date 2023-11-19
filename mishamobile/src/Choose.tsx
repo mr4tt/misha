@@ -4,12 +4,12 @@ import {View, Text, StyleSheet} from 'react-native';
 // import { listen_to_active_sessions, listen_to_inactive_pcs, listen_to_pc_layout_dimensions, listen_to_pc_layout_pcs, listen_to_pcs, listen_to_users } from '../../server/api.js';
 import * as api from './server/api.js';
 import {Layout} from './components/Layout.jsx';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../App.js';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App.js';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChooseScreen'>;
 
-export function ChooseScreen({route, navigation}: Props  ) {
+export function ChooseScreen({route, navigation}: Props) {
   const [pcs, setPcs] = useState([]);
   const [inactivePcs, setInactivePcs] = useState([]);
   const [users, setUsers] = useState([]);
@@ -74,19 +74,19 @@ export function ChooseScreen({route, navigation}: Props  ) {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.text}>
-        Thanks for signing in!{'\n'}
+      <Text style={styles.text}>Thanks for signing in!{'\n'}</Text>
+      <Text
+        style={{
+          fontSize: 20,
+          color: '#000000',
+          textAlign: 'center',
+          verticalAlign: 'top',
+          marginTop: -30,
+          marginBottom: 10,
+          paddingBottom: 10,
+        }}>
+        Please choose your seat.
       </Text>
-      <Text style={{
-      fontSize: 20,
-      color: '#000000',
-      textAlign: 'center',
-      verticalAlign: 'top',
-      marginTop: -30,
-      marginBottom: 10,
-      paddingBottom: 10,
-    }}>
-      Please choose your seat.</Text>
       <Layout
         pcs={pcs}
         inactivePcs={inactivePcs}
@@ -95,7 +95,6 @@ export function ChooseScreen({route, navigation}: Props  ) {
         pcLayoutDimensions={pcLayoutDimensions}
         pcLayoutPcs={pcLayoutPcs}
         tag={route.params.tag.id}
-
         navigation={navigation}
       />
     </View>
