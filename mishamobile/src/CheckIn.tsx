@@ -3,6 +3,7 @@ import React from 'react';
 import {RootStackParamList} from '../App';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import {useNfc} from './hooks/use-nfc';
+import Raccoon from './assets/idraccoon.svg';
 import * as api from './server';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CheckInScreen'>;
