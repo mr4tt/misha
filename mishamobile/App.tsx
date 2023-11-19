@@ -1,41 +1,25 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import NfcManager, {NfcTech} from 'react-native-nfc-manager';
+import {ScanScreen} from './src/Scan';
+import {ChooseScreen} from './src/Choose';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-// Pre-step, call this before any NFC operations
-NfcManager.start();
+export type RootStackParamList = {
+  ScanScreen: undefined;
+  ChooseScreen: {
+    tag: string;
+  };
+};
 
-function App() {
-  async function readNdef() {
-    try {
-      // register for the NFC tag with NDEF in it
-      await NfcManager.requestTechnology(NfcTech.Ndef);
-      // the resolved tag object will contain `ndefMessage` property
-      const tag = await NfcManager.getTag();
-      console.warn('Tag found', tag);
-    } catch (ex) {
-      console.warn('Oops!', ex);
-    } finally {
-      // stop the nfc scanning
-      NfcManager.cancelTechnologyRequest();
-    }
-  }
+const Stack = createStackNavigator<RootStackParamList>();
 
+export default function App() {
   return (
-    <View style={styles.wrapper}>
-      <TouchableOpacity onPress={readNdef}>
-        <Text>Scan a Tag</Text>
-      </TouchableOpacity>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="ScanScreen" component={ScanScreen} />
+        <Stack.Screen name="ChooseScreen" component={ChooseScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export default App;
