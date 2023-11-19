@@ -105,7 +105,7 @@ export default function Home() {
                   {range(dims.cols).map(c => (
                     <li key={c} role="gridcell" className={cl(
                       'grow', 'border-solid',
-                      !!pcRcs?.[r]?.[c] ? '' : 'border border-slate',
+                      !pcRcs?.[r]?.[c] && 'border border-slate',
                       resolveCellColor(!!inactivePcRcs?.[r]?.[c], !!occupiedPcRcs?.[r]?.[c], !!pcRcs?.[r]?.[c]),
                     )} />
                   ))}
