@@ -1,4 +1,4 @@
-import { ref as _ref, child, get, onValue, set, once } from 'firebase/database';
+import { ref as _ref, child, get, onValue, set, once, runTransaction } from 'firebase/database';
 import { get_db } from "./config";
 
 /**
@@ -68,6 +68,17 @@ export function listen_to_pc_layout_dimensions(cb) {
 
 /**
  * 
+ * @param {Cb<Rtdb['pc_layout']['pcs']>} cb 
+ * @returns 
+ */
+export function listen_to_pc_layout_pcs(cb) {
+    return onValue(ref(PCLAYOUT_PATH, 'pcs'), ss => {
+        cb(ss.val())
+    })
+}
+
+/**
+ * 
  * @param {import('./types').StudentCardId} id 
  * @returns 
  */
@@ -98,4 +109,27 @@ export async function register_session(user_id, pc_id) {
     }
 
     set(ref(ACTIVESESSIONS_PATH, pc_id), session)
+}
+
+/**
+ * 
+ * @param {import('./types').StudentCardId} user_id 
+ * @returns 
+ */
+export async function check_if_user_has_active_session(user_id) {
+    const active_sessions = await get(ref(ACTIVESESSIONS_PATH))
+    const user_has_active_session = Object.values(active_sessions.val())
+        .some(session => session.user === user_id)
+    
+    return user_has_active_session
+}
+
+/**
+ * 
+ * @param {import('./types').HumanReadablePcId} pc_id 
+ * @returns 
+ */
+export async function check_if_pc_has_active_session(pc_id) {
+    const data = await get(ref(ACTIVESESSIONS_PATH, pc_id))
+    return data.exists()
 }
