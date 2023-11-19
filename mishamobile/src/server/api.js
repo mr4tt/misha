@@ -174,6 +174,46 @@ export async function check_if_pc_has_active_session(pc_id) {
 }
 
 /**
+ *
+ * @param {import('./types').HumanReadablePcId} pc_id
+ * @returns
+ */
+export async function mark_pc_inactive(pc_id) {
+    // clear any active session associated with the pc
+    await set(ref(ACTIVESESSIONS_PATH, pc_id), null)
+
+    // and mark the pc inactive
+    return set(ref(INACTIVEPCS_PATH, pc_id), true)
+}
+
+/**
+ *
+ * @param {import('./types').HumanReadablePcId} pc_id
+ * @returns
+ */
+export function mark_pc_no_longer_inactive(pc_id) {
+    return set(ref(INACTIVEPCS_PATH, pc_id), null)
+}
+
+export async function mark_all_pcs_inactive() {
+    const pcs = (await get(ref(PCS_PATH)))
+
+    const o = {}
+    for (const id in pcs.val()) {
+        o[id] = true
+    }
+
+    // presumably want to clear all active sessions too
+    await set(ref(ACTIVESESSIONS_PATH), null)
+
+    return set(ref(INACTIVEPCS_PATH), o)
+}
+
+export function mark_all_pcs_no_longer_inactive() {
+    return set(ref(INACTIVEPCS_PATH), null)
+}
+
+/**
  * hardcoded database seeding.
  * DO NOT USE THIS IN DEPLOYED CODE
  */
