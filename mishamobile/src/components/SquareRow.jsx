@@ -6,7 +6,16 @@ export default function SquareRow(props) {
   return (
     <View style={styles.center_rows}>
       {props.row.map((square, i) => {
-        return <Square key={i} square={square} />;
+        return (
+          <Square
+            key={i}
+            square={square}
+            selectedRow={props.selectedRow}
+            selectedCol={props.selectedCol}
+            setSelectedRow={props.setSelectedRow}
+            setSelectedCol={props.setSelectedCol}
+          />
+        );
       })}
     </View>
   );

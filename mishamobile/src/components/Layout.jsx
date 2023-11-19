@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Pressable} from 'react-native';
 
 import SquareRow from './SquareRow';
 
 export function Layout(props) {
   const [squares, setSquares] = useState([]);
+  const [selectedRow, setSelectedRow] = useState(-1);
+  const [selectedCol, setSelectedCol] = useState(-1);
 
   useEffect(() => {
     if (
@@ -83,7 +85,16 @@ export function Layout(props) {
         Cafe
       </Text>
       {squares.map((row, i) => {
-        return <SquareRow key={i} row={row} />;
+        return (
+          <SquareRow
+            key={i}
+            row={row}
+            selectedRow={selectedRow}
+            selectedCol={selectedCol}
+            setSelectedCol={setSelectedCol}
+            setSelectedRow={setSelectedRow}
+          />
+        );
       })}
       <Text
         style={{
@@ -98,6 +109,128 @@ export function Layout(props) {
         }}>
         Garage
       </Text>
+      <Text
+        style={{
+          color: 'black',
+          fontSize: 20,
+          marginBottom: 5,
+          paddingTop: 20,
+        }}>
+        Legend
+      </Text>
+
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginLeft: 50,
+          marginBottom: -5,
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'left',
+              alignItems: 'center',
+              width: 120,
+            }}>
+            <View
+              style={{
+                height: 15,
+                width: 15,
+                backgroundColor: '#23c55e',
+                borderWidth: 1,
+              }}></View>
+            <Text style={{marginLeft: 5, color: 'black'}}>Available</Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'left',
+              alignItems: 'center',
+              width: 120,
+            }}>
+            <View
+              style={{
+                height: 15,
+                width: 15,
+                backgroundColor: '#ee4444',
+                borderWidth: 1,
+              }}></View>
+            <Text style={{color: 'black', marginLeft: 0}}> Occupied</Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'left',
+              alignItems: 'center',
+              width: 120,
+            }}>
+            <View
+              style={{
+                height: 15,
+                width: 15,
+                backgroundColor: '#324154',
+                borderWidth: 1,
+              }}></View>
+            <Text style={{marginLeft: 5, color: 'black'}}>Unavailable</Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'left',
+              alignItems: 'center',
+              width: 120,
+            }}>
+            <View
+              style={{
+                height: 15,
+                width: 15,
+                backgroundColor: 'yellow',
+                borderWidth: 1,
+              }}></View>
+            <Text style={{marginLeft: 5, color: 'black'}}>Selected</Text>
+          </View>
+        </View>
+      </View>
+      {selectedCol !== -1 && (
+        <Pressable
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingVertical: 12,
+            paddingHorizontal: 32,
+            marginHorizontal: 10,
+            marginVertical: 20,
+            borderRadius: 4,
+            elevation: 3,
+            backgroundColor: 'white',
+            marginTop: 30,
+            
+          }}>
+          <Text
+            style={{
+              color: 'black',
+            }}>
+            Confirm
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }

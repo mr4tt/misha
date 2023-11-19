@@ -70,8 +70,18 @@ export function ChooseScreen() {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.text}>
-        Thanks for signing in!{'\n'}Please choose your seat.
+        Thanks for signing in!{'\n'}
       </Text>
+      <Text style={{
+      fontSize: 20,
+      color: '#000000',
+      textAlign: 'center',
+      verticalAlign: 'top',
+      marginTop: -30,
+      marginBottom: 10,
+      paddingBottom: 10,
+    }}>
+      Please choose your seat.</Text>
       <Layout
         pcs={pcs}
         inactivePcs={inactivePcs}
@@ -91,7 +101,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25,
     color: '#000000',
-    padding: 40,
+    paddingTop: 40,
+    paddingBottom: 10,
     textAlign: 'center',
     verticalAlign: 'top',
   },
