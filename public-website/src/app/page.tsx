@@ -95,28 +95,49 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-16">
       <h1 className="prose prose-2xl font-bold">TEC PC Availability</h1>
       {/* <button onClick={seed}>DS:KLFJSDFKDS</button> */}
-      <div className="grow w-full flex items-center justify-center overflow-hidden border rounded-xl border-solid border-tec-blue">
-        {dims === null ? <span className="font-mono text-xl">Internal Error</span> : (
-          <ul role="grid" className="grow self-stretch flex flex-col items-stretch">
-            <li className="flex items-center justify-center p-2 bg-tec-blue text-white">Garage</li>
-            {range(dims.rows).map(r => (
-              <li key={r} className={`grow`}>
-                <ul role="row" className="h-full grow flex items-stretch">
-                  {range(dims.cols).map(c => (
-                    <li key={c} role="gridcell" className={cl(
-                      'grow', 'border-solid',
-                      !pcRcs?.[r]?.[c] && 'border border-slate',
-                      resolveCellColor(!!inactivePcRcs?.[r]?.[c], !!occupiedPcRcs?.[r]?.[c], !!pcRcs?.[r]?.[c]),
-                    )} />
-                  ))}
-                </ul>
-              </li>
-            ))}
-            <li className="flex items-center justify-center p-2 bg-tec-blue text-white">Cafe</li>
-          </ul>
+      <div className="grow w-full flex flex-col items-center justify-center gap-2">
+        {dims !== null && (
+          <div className="flex items-center justify-center gap-8">
+            <LegendKey fill="fill-green-500" label="available" />
+            <LegendKey fill="fill-red-500" label="occupied" />
+            <LegendKey fill="fill-slate-700" label="out of service" />
+          </div>
         )}
+        <div className="grow w-full flex items-center justify-center overflow-hidden border rounded-xl border-solid border-tec-blue">
+          {dims === null ? <span className="font-mono text-xl">Internal Error</span> : (
+            <>
+              <ul role="grid" className="grow self-stretch flex flex-col items-stretch">
+                <li className="flex items-center justify-center p-2 bg-tec-blue text-white">Garage</li>
+                {range(dims.rows).map(r => (
+                  <li key={r} className={`grow`}>
+                    <ul role="row" className="h-full grow flex items-stretch">
+                      {range(dims.cols).map(c => (
+                        <li key={c} role="gridcell" className={cl(
+                          'grow', 'border-solid',
+                          !pcRcs?.[r]?.[c] && 'border border-slate',
+                          resolveCellColor(!!inactivePcRcs?.[r]?.[c], !!occupiedPcRcs?.[r]?.[c], !!pcRcs?.[r]?.[c]),
+                        )} />
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+                <li className="flex items-center justify-center p-2 bg-tec-blue text-white">Cafe</li>
+              </ul>
+            </>
+          )}
+        </div>
       </div>
     </main>
+  )
+}
+
+type LegendKeyProps = { fill: string, label: string }
+function LegendKey({ fill, label }: LegendKeyProps) {
+  return (
+    <div className="flex items-center justify-center gap-2">
+      <svg width="1em" height="1em" viewBox="0 0 1 1"><rect className={fill} width="1" height="1" /></svg>
+      <span>- {label}</span>
+    </div>
   )
 }
 

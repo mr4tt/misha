@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 
 import SquareRow from './SquareRow';
 
@@ -14,7 +14,6 @@ export function Layout(props) {
       props.inactivePcs.length == 0
     )
       return;
-
 
     let rows = props.pcLayoutDimensions.rows;
     let cols = props.pcLayoutDimensions.cols;
@@ -70,12 +69,39 @@ export function Layout(props) {
 
   return (
     <View style={styles.center_rows}>
+      <Text
+        style={{
+          backgroundColor: '#00629b',
+          height: 25,
+          width: props.pcLayoutDimensions.cols
+            ? 35 * props.pcLayoutDimensions.cols
+            : 0,
+          textAlign: 'center', // <-- the magic
+          borderTopRightRadius: 10,
+          borderTopLeftRadius: 10,
+        }}>
+        Cafe
+      </Text>
       {squares.map((row, i) => {
         return <SquareRow key={i} row={row} />;
       })}
+      <Text
+        style={{
+          backgroundColor: '#00629b',
+          height: 25,
+          width: props.pcLayoutDimensions.cols
+            ? 35 * props.pcLayoutDimensions.cols
+            : 0,
+          textAlign: 'center', // <-- the magic
+          borderBottomRightRadius: 10,
+          borderBottomLeftRadius: 10,
+        }}>
+        Garage
+      </Text>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   center_rows: {
     flexDirection: 'column',
