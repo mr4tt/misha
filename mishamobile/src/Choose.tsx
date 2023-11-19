@@ -75,18 +75,7 @@ export function ChooseScreen({route, navigation}: Props) {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.text}>Thanks for signing in!{'\n'}</Text>
-      <Text
-        style={{
-          fontSize: 20,
-          color: '#000000',
-          textAlign: 'center',
-          verticalAlign: 'top',
-          marginTop: -30,
-          marginBottom: 10,
-          paddingBottom: 10,
-        }}>
-        Please choose your seat.
-      </Text>
+     
       <Text style={{
       fontSize: 20,
       color: '#000000',
