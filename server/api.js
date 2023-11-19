@@ -13,6 +13,7 @@ import { get_db } from "./config";
 const PCS_PATH = 'pcs'
 const USERS_PATH = 'users'
 const ACTIVESESSIONS_PATH = 'active_sessions'
+const PCLAYOUT_PATH = 'pc_layout'
 
 /**
  * 
@@ -50,6 +51,17 @@ export function listen_to_users(cb) {
  */
 export function listen_to_active_sessions(cb) {
     return onValue(ref(ACTIVESESSIONS_PATH), ss => {
+        cb(ss.val())
+    })
+}
+
+/**
+ * 
+ * @param {Cb<Rtdb['pc_layout']['dimensions']>} cb 
+ * @returns 
+ */
+export function listen_to_pc_layout_dimensions(cb) {
+    return onValue(ref(PCLAYOUT_PATH, 'dimensions'), ss => {
         cb(ss.val())
     })
 }

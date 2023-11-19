@@ -47,13 +47,11 @@ export {}
  */
 
 /**
+ * @typedef {{ rows: number, cols: number }} Dimensions
  * @typedef {{ r: number, c: number }} Coordinate
  * 
  * @typedef {{
- *  dimensions: {
- *      rows: number, 
- *      cols: number,
- *  },
+ *  dimensions: Dimensions,
  *  pcs: Record<HumanReadablePcId, Coordinate>,
  * }} PcLayout
  */

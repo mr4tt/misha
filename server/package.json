@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "clean": "rm -f ./*.d.ts",
     "watch": "npm run clean && tsc --watch",

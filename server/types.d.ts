@@ -29,14 +29,15 @@ export type Session = {
     user: StudentCardId;
     start_time: DateMs;
 };
+export type Dimensions = {
+    rows: number;
+    cols: number;
+};
 export type Coordinate = {
     r: number;
     c: number;
 };
 export type PcLayout = {
-    dimensions: {
-        rows: number;
-        cols: number;
-    };
+    dimensions: Dimensions;
     pcs: Record<HumanReadablePcId, Coordinate>;
 };

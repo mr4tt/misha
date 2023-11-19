@@ -15,6 +15,12 @@ export function listen_to_users(cb: Cb<Rtdb['users']>): import("@firebase/databa
 export function listen_to_active_sessions(cb: Cb<Rtdb['active_sessions']>): import("@firebase/database").Unsubscribe;
 /**
  *
+ * @param {Cb<Rtdb['pc_layout']['dimensions']>} cb
+ * @returns
+ */
+export function listen_to_pc_layout_dimensions(cb: Cb<Rtdb['pc_layout']['dimensions']>): import("@firebase/database").Unsubscribe;
+/**
+ *
  * @param {import('./types').StudentCardId} id
  * @returns
  */
