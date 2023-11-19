@@ -2,14 +2,16 @@ import React, {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import NfcManager, {NfcTech} from 'react-native-nfc-manager';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type {RootStackParamList} from '../App';
 
-// Pre-step, call this before any NFC operations
-NfcManager.start();
+type Props = NativeStackScreenProps<RootStackParamList, 'ScanScreen'>;
 
-export function ScanScreen ({navigation: NativeStackScreenProps}) {
+export function ScanScreen({navigation}: Props) {
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     async function readNdef() {
+      // Pre-step, call this before any NFC operations
+      NfcManager.start();
       try {
         const SECONDS: number = 20;
         interval = setInterval(async () => {
@@ -18,11 +20,15 @@ export function ScanScreen ({navigation: NativeStackScreenProps}) {
           if (reqTag) {
             // the resolved tag object will contain `ndefMessage` property
             const tag = await NfcManager.getTag();
+            if (tag === null) {
+              console.warn('couldnt find tag');
+              return;
+            }
             console.warn('Tag found', tag);
             clearInterval(interval);
 
             NfcManager.cancelTechnologyRequest();
-            navigation.navigate('Choose.tsx');
+            navigation.navigate('ChooseScreen', {tag});
             // TODO: go to next screen (save this tag along the way)
           }
         }, SECONDS * 1000);
@@ -38,7 +44,7 @@ export function ScanScreen ({navigation: NativeStackScreenProps}) {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [navigation]);
 
   return (
     <View style={styles.wrapper}>
@@ -58,5 +64,3 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 });
-
-export default App;

@@ -3,11 +3,12 @@ import {ScanScreen} from './src/Scan';
 import {ChooseScreen} from './src/Choose';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {TagEvent} from 'react-native-nfc-manager';
 
 export type RootStackParamList = {
   ScanScreen: undefined;
   ChooseScreen: {
-    tag: string;
+    tag: TagEvent;
   };
 };
 
