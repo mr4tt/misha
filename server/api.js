@@ -119,15 +119,15 @@ export async function register_session(user_id, pc_id) {
         start_time: Date.now(),
     };
 
-    set(ref(ACTIVESESSIONS_PATH, pc_id), session);
+    return await set(ref(ACTIVESESSIONS_PATH, pc_id), session);
 }
 
 /**
  * end session with the given PC id (NOT user id. use end_session_by_user instead for that.)
  * @param {import('./types').HumanReadablePcId} pc_id
  */
-export async function end_session(pc_id) {
-    set(ref(ACTIVESESSIONS_PATH, pc_id), null);
+export function end_session(pc_id) {
+    return set(ref(ACTIVESESSIONS_PATH, pc_id), null);
 }
 
 /**
@@ -145,6 +145,10 @@ export function end_session_by_user(user_id) {
         }
         return data;
     });
+}
+
+export function end_all_sessions() {
+    return set(ref(ACTIVESESSIONS_PATH), null);
 }
 
 /**
@@ -167,6 +171,46 @@ export async function check_if_user_has_active_session(user_id) {
 export async function check_if_pc_has_active_session(pc_id) {
     const data = await get(ref(ACTIVESESSIONS_PATH, pc_id));
     return data.exists();
+}
+
+/**
+ *
+ * @param {import('./types').HumanReadablePcId} pc_id
+ * @returns
+ */
+export async function mark_pc_inactive(pc_id) {
+    // clear any active session associated with the pc
+    await set(ref(ACTIVESESSIONS_PATH, pc_id), null)
+
+    // and mark the pc inactive
+    return set(ref(INACTIVEPCS_PATH, pc_id), true)
+}
+
+/**
+ *
+ * @param {import('./types').HumanReadablePcId} pc_id
+ * @returns
+ */
+export function mark_pc_no_longer_inactive(pc_id) {
+    return set(ref(INACTIVEPCS_PATH, pc_id), null)
+}
+
+export async function mark_all_pcs_inactive() {
+    const pcs = (await get(ref(PCS_PATH)))
+
+    const o = {}
+    for (const id in pcs.val()) {
+        o[id] = true
+    }
+
+    // presumably want to clear all active sessions too
+    await set(ref(ACTIVESESSIONS_PATH), null)
+
+    return set(ref(INACTIVEPCS_PATH), o)
+}
+
+export function mark_all_pcs_no_longer_inactive() {
+    return set(ref(INACTIVEPCS_PATH), null)
 }
 
 /**
@@ -203,7 +247,7 @@ export function seed() {
         E3: rc(5, 7),
         E4: rc(7, 7),
     };
-    const seed_users = ["misha"];
+    const seed_users = ["misha", "ewang2002"];
     const pc = (id) => ({ id });
     const u = (uid) => ({ uid });
     set(ref(), {
@@ -213,8 +257,14 @@ export function seed() {
         },
         users: Object.fromEntries(seed_users.map((id) => [id, u(id)])),
         active_sessions: {
+            // over time
             B2: {
                 user: "misha",
+                start_time: Date.now() - (60 * 1000 * 121),
+            },
+            // just started
+            C4: {
+                user: "ewang2002",
                 start_time: Date.now(),
             },
         },

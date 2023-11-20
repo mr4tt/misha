@@ -52,6 +52,7 @@ export function end_session(pc_id: any): Promise<void>;
  * @param {import('./types').StudentCardId} user_id
  */
 export function end_session_by_user(user_id: any): Promise<import("@firebase/database").TransactionResult>;
+export function end_all_sessions(): Promise<void>;
 /**
  *
  * @param {import('./types').StudentCardId} user_id
@@ -64,6 +65,20 @@ export function check_if_user_has_active_session(user_id: any): Promise<boolean>
  * @returns
  */
 export function check_if_pc_has_active_session(pc_id: any): Promise<boolean>;
+/**
+ *
+ * @param {import('./types').HumanReadablePcId} pc_id
+ * @returns
+ */
+export function mark_pc_inactive(pc_id: any): Promise<void>;
+/**
+ *
+ * @param {import('./types').HumanReadablePcId} pc_id
+ * @returns
+ */
+export function mark_pc_no_longer_inactive(pc_id: any): Promise<void>;
+export function mark_all_pcs_inactive(): Promise<void>;
+export function mark_all_pcs_no_longer_inactive(): Promise<void>;
 /**
  * hardcoded database seeding.
  * DO NOT USE THIS IN DEPLOYED CODE
